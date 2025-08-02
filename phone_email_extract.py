@@ -7,11 +7,11 @@ import pyperclip, re
 phoneRegex = re.compile(r'''(
     (\d{2, 3}|\(\+?\d{2,3}\)|\+?\d{2}|0?)   #area_code
     (\s|-|\.)?                          #separator
-    (\d{3})?                             #first 3 digits
+    (\d{3})                             #first 3 digits
     (\s|-|\.)?                           #separator
-    (\d{3})                             #2nd 3 digits
+    (\d{4})                             #2nd 4 digits
     (\s|-|\.)?                           #separator
-    (\d{4})                             #last 4 digits
+    (\d{3})?                             #last 4 digits
     )''', re.VERBOSE)
 
 
@@ -28,9 +28,7 @@ text = str(pyperclip.paste())
 matches = []
 
 for groups in phoneRegex.findall(text):
-    phoneNum = '-'.join([groups[1], groups[3], groups[5], groups[7]])
-    if groups[7] != '':
-        phoneNum += 'x' + groups[7]
+    phoneNum = ''.join([groups[1], groups[3], groups[5], groups[7]])
     matches.append(phoneNum)
 
 for groups in emailRegex.findall(text):
